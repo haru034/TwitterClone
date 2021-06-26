@@ -4,7 +4,8 @@ ini_set('display_errors', 1);
 //日本時間にする
 date_default_timezone_set('Asia/Tokyo');
 //URL/ディレクトリ設定
-define('HOME_URL', '/TwitterClone01/Views/home.php');
+define('HOME_URL', '/TwittterClone01/');
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -14,10 +15,10 @@ define('HOME_URL', '/TwitterClone01/Views/home.php');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ホーム画面です">
-    <link rel="icon" href="/TwitterClone01/Views/img/logo-twitterblue.svg">
+    <link rel="icon" href="<?php echo HOME_URL;?>Views/img/logo-twitterblue.svg">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link href="/TwitterClone01/Views/css/style.css" rel="stylesheet">
+    <link href="<?php echo HOME_URL;?>Views/css/style.css" rel="stylesheet">
 
     <title>ホーム画面 / Twitterクローン</title>
 </head>
@@ -27,13 +28,13 @@ define('HOME_URL', '/TwitterClone01/Views/home.php');
         <div class="side">
             <div class="side-inner">
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a href="home.php" class="nav-link"><img src="/TwitterClone01/Views/img/logo-twitterblue.svg" alt="" class="icon"></a></li>
-                    <li class="nav-item"><a href="home.php" class="nav-link"><img src="/TwitterClone01/Views/img/icon-home.svg" alt=""></a></li>
-                    <li class="nav-item"><a href="search.php" class="nav-link"><img src="/TwitterClone01/Views/img/icon-search.svg" alt=""></a></li>
-                    <li class="nav-item"><a href="notification.php" class="nav-link"><img src="/TwitterClone01/Views/img/icon-notification.svg" alt=""></a></li>
-                    <li class="nav-item"><a href="profile.php" class="nav-link"><img src="/TwitterClone01/Views/img/icon-profile.svg" alt=""></a></li>
-                    <li class="nav-item"><a href="post.php" class="nav-link"><img src="/TwitterClone01/Views/img/icon-post-tweet-twitterblue.svg" alt="" class="post-tweet"></a></li>
-                    <li class="nav-item my-icon"><img src="/TwitterClone01/Views/img_uploaded/user/sample-person.jpg" alt=""></li>
+                    <li class="nav-item"><a href="home.php" class="nav-link"><img src="<?php echo HOME_URL;?>Views/img/logo-twitterblue.svg" alt="" class="icon"></a></li>
+                    <li class="nav-item"><a href="home.php" class="nav-link"><img src="<?php echo HOME_URL;?>Views/img/icon-home.svg" alt=""></a></li>
+                    <li class="nav-item"><a href="search.php" class="nav-link"><img src="<?php echo HOME_URL;?>Views/img/icon-search.svg" alt=""></a></li>
+                    <li class="nav-item"><a href="notification.php" class="nav-link"><img src="<?php echo HOME_URL;?>Views/img/icon-notification.svg" alt=""></a></li>
+                    <li class="nav-item"><a href="profile.php" class="nav-link"><img src="<?php echo HOME_URL;?>Views/img/icon-profile.svg" alt=""></a></li>
+                    <li class="nav-item"><a href="post.php" class="nav-link"><img src="<?php echo HOME_URL;?>Views/img/icon-post-tweet-twitterblue.svg" alt="" class="post-tweet"></a></li>
+                    <li class="nav-item my-icon"><img src="<?php echo HOME_URL;?>Views/img_uploaded/user/sample-person.jpg" alt=""></li>
                 </ul>
             </div>
         </div>
@@ -43,7 +44,7 @@ define('HOME_URL', '/TwitterClone01/Views/home.php');
             </div>
             <div class="tweet-post">
                 <div class="my-icon">
-                    <img src="/TwitterClone01/Views/img_uploaded/user/sample-person.jpg" alt="">
+                    <img src="<?php echo HOME_URL;?>Views/img_uploaded/user/sample-person.jpg" alt="">
                 </div>
                 <div class="input-area">
                     <form action="post.php" method="post" enctype="multipart/form-data">
@@ -64,7 +65,7 @@ define('HOME_URL', '/TwitterClone01/Views/home.php');
                 <div class="tweet">
                     <div class="user">
                         <a href="profile.php?user_id=1">
-                            <img src="/TwitterClone01/Views/img_uploaded/user/sample-person.jpg" alt="">
+                            <img src="<?php echo HOME_URL;?>Views/img_uploaded/user/sample-person.jpg" alt="">
                         </a>
                     </div>
                     <div class="content">
@@ -77,7 +78,7 @@ define('HOME_URL', '/TwitterClone01/Views/home.php');
                         <p>今プログラミングをしています。</p>
                         <div class="icon-list">
                             <div class="like">
-                                <img src="/TwitterClone01/Views/img/icon-heart.svg" alt="">
+                                <img src="<?php echo HOME_URL;?>Views/img/icon-heart.svg" alt="">
                             </div>
                             <div class="like-count">0</div>
                         </div>
@@ -87,7 +88,7 @@ define('HOME_URL', '/TwitterClone01/Views/home.php');
                 <div class="tweet">
                     <div class="user">
                         <a href="profile.php?user_id=2">
-                            <img src="/TwitterClone01/Views/img/icon-default-user.svg" alt="">
+                            <img src="<?php echo HOME_URL;?>Views/img/icon-default-user.svg" alt="">
                         </a>
                     </div>
                     <div class="content">
@@ -98,10 +99,10 @@ define('HOME_URL', '/TwitterClone01/Views/home.php');
                             </a>
                         </div>
                         <p>コワーキングスペースをオープンしました！</p>
-                        <img src="/TwitterClone01/Views/img_uploaded/tweet/sample-post.jpg" alt="" class="post-image">
+                        <img src="<?php echo HOME_URL;?>Views/img_uploaded/tweet/sample-post.jpg" alt="" class="post-image">
                         <div class="icon-list">
                             <div class="like">
-                                <img src="/TwitterClone01/Views/img/icon-heart-twitterblue.svg" alt="">
+                                <img src="<?php echo HOME_URL;?>Views/img/icon-heart-twitterblue.svg" alt="">
                             </div>
                             <div class="like-count">1</div>
                         </div>
