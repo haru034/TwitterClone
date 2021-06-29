@@ -4,7 +4,90 @@ ini_set('display_errors', 1);
 //日本時間にする
 date_default_timezone_set('Asia/Tokyo');
 //URL/ディレクトリ設定
-define('HOME_URL', '/TwittterClone01/');
+define('HOME_URL', '/TwitterClone01/');
+
+////////////////////////////////////////
+//ツイート一覧
+////////////////////////////////////////
+$view_tweets = [
+    [
+        'user_id' => 1,
+        'user_name' => 'taro',
+        'user_nickname' => '太郎',
+        'user_image_name' => 'sample-person.jpg',
+        'tweet_body' => '今プログラミングをしています。',
+        'tweet_image_name' => null,
+        'tweet_created_at' => '2021-06-15 14:00:00',
+        'like_id' => null,
+        'like_count' => 0,
+    ],
+    [
+        'user_id' => 2,
+        'user_name' => 'jiro',
+        'user_nickname' => '次郎',
+        'user_image_name' => null,
+        'tweet_body' => 'コワーキングスペースをオープンしました！',
+        'tweet_image_name' => 'sample-post.jpg',
+        'tweet_created_at' => '2021-06-14 14:00:00',
+        'like_id' => 1,
+        'like_count' => 1,
+    ],
+];
+
+///////////////////////////////////////////
+//便利な関数
+///////////////////////////////////////////
+/**
+ * 画像ファイル名から画像のURLを生成
+ * 
+ * @param string $name 画像ファイル名
+ * @param string $type ユーザー画像かツイート画像
+ * @return string
+ */
+function buildImagePath(string $name = null, string $type)
+{
+    if ($type === 'user' && !isset($name)) {
+        return HOME_URL . 'View/img/icon-default-user.svg';
+    }
+
+    return HOME_URL . 'Views/img_uploaded/' . $type . '/' . htmlspecialchars($name);
+}
+/**
+ * 指定した日時からどれだけ経過したかを取得
+ * 
+ * @param string $datetime 日時
+ * @return string
+ */
+function convertToDayTimeAgo(string $datetime)
+{
+    $unix = strtotime($datetime);
+    $now = time();
+    $diff_sec = $now - $unix;
+
+    if ($diff_sec < 60) {
+        $time = $diff_sec;
+        $unit = '秒前';
+    } elseif ($diff_sec < 3600){
+        $time = $diff=sec / 60;
+        $unit = '分前';
+    } elseif ($diff_sec < 86400) {
+        $time = $diff_sec / 3600;
+        $unit = '時間前';
+    } elseif ($diff_sec < 2764800) {
+        $time = $diff_sec / 86400;
+        $unit = '日前';
+    } else {
+        if (date('Y') != date('Y' , $unix)) {
+            $time = date('Y年n月j日' , $unix);
+        } else {
+            $time = date('n月j日' , $unix);
+        }
+        return $time;
+    }
+
+    return (int)$time . $unit;
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -61,55 +144,52 @@ define('HOME_URL', '/TwittterClone01/');
 
             <div class="ditch"></div>
 
-            <div class="tweet-list">
-                <div class="tweet">
-                    <div class="user">
-                        <a href="profile.php?user_id=1">
-                            <img src="<?php echo HOME_URL;?>Views/img_uploaded/user/sample-person.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="content">
-                        <div class="name">
-                            <a href="profile.php?user_id=1">
-                                <span class="nickname">太郎</span>
-                                <span class="user-name">@taro ・23日前</span>
-                            </a>
-                        </div>
-                        <p>今プログラミングをしています。</p>
-                        <div class="icon-list">
-                            <div class="like">
-                                <img src="<?php echo HOME_URL;?>Views/img/icon-heart.svg" alt="">
+            <?php if (empty($view_tweets)): ?>
+                        <p class="p-3">ツイートがまだありません</p>
+            <?php else: ?>
+                <div class="tweet-list">
+                    <?php foreach ($view_tweets as $view_tweet): ?>
+                        <div class="tweet">
+                            <div class="user">
+                                <a href="profile.php?user_id=1">
+                                    <img src="<?php echo buildImagePath($view_tweet['user_image_name'], 'user'); ?>" alt="">
+                                </a>
                             </div>
-                            <div class="like-count">0</div>
-                        </div>
-                    </div>
-                </div>
+                            <div class="content">
+                                <div class="name">
+                                    <a href="profile.php?user_id=<?php echo htmlspecialchars($view_tweet['user_id']); ?>">
+                                        <span class="nickname"><?php echo htmlspecialchars($view_tweet['user_nickname']); ?></span>
+                                        <span class="user-name">@<?php echo htmlspecialchars($view_tweet['user_name']); ?> ・<?php echo convertToDayTimeAgo($view_tweet['tweet_created_at']); ?></span>
+                                    </a>
+                                </div>
 
-                <div class="tweet">
-                    <div class="user">
-                        <a href="profile.php?user_id=2">
-                            <img src="<?php echo HOME_URL;?>Views/img/icon-default-user.svg" alt="">
-                        </a>
-                    </div>
-                    <div class="content">
-                        <div class="name">
-                            <a href="profile.php?user_id=2">
-                                <span class="nickname">次郎</span>
-                                <span class="user-name">@jiro ・24日前</span>
-                            </a>
-                        </div>
-                        <p>コワーキングスペースをオープンしました！</p>
-                        <img src="<?php echo HOME_URL;?>Views/img_uploaded/tweet/sample-post.jpg" alt="" class="post-image">
-                        <div class="icon-list">
-                            <div class="like">
-                                <img src="<?php echo HOME_URL;?>Views/img/icon-heart-twitterblue.svg" alt="">
+                                <p><?php echo htmlspecialchars($view_tweet['tweet_body']);?></p>
+
+                                <?php if(isset($view_tweet['tweet_image_name'])): ?>
+                                    <img src="<?php echo buildImagePath($view_tweet['tweet_image_name'], 'tweet'); ?>" alt="" class="post-image">
+                                <?php endif; ?>
+
+                                <div class="icon-list">
+                                    <div class="like">
+                                        <?php 
+                                        if (isset($view_tweet['like_id'])) {
+                                            //いいね！している場合
+                                            echo '<img src="' .  HOME_URL . 'Views/img/icon-heart-twitterblue.svg" alt="">';
+                                        }  else {
+                                            echo '<img src="' .  HOME_URL . 'Views/img/icon-heart.svg" alt="">';
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="like-count"><?php echo htmlspecialchars($view_tweet['like_count']); ?></div>
+                                </div>
                             </div>
-                            <div class="like-count">1</div>
                         </div>
-                    </div>
+                    <?php endforeach;?>
+
                 </div>
-            </div>
+            <?php endif; ?>
         </div>
     </div>
 </body>
+
 </html>
