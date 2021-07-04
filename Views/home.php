@@ -47,7 +47,7 @@ $view_tweets = [
 function buildImagePath(string $name = null, string $type)
 {
     if ($type === 'user' && !isset($name)) {
-        return HOME_URL . 'View/img/icon-default-user.svg';
+        return HOME_URL . 'Views/img/icon-default-user.svg';
     }
 
     return HOME_URL . 'Views/img_uploaded/' . $type . '/' . htmlspecialchars($name);
