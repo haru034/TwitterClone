@@ -45,10 +45,10 @@ function createTweet(array $data)
  * ツイート一覧を取得
  * 
  * @param array $user ログインしているユーザー情報
+ * @param string $keyword 検索キーワード
  * @return array|false
  */
-
-function findTweets(array $user)
+function findTweets(array $user, string $keyword = null)
 {
     // DB接続
     $mysqli = new mysqli(DB_HOST, DB_USER, '', DB_NAME);
@@ -62,6 +62,8 @@ function findTweets(array $user)
     $login_user_id = $mysqli->real_escape_string($user['id']);
 
     // 検索のSQLクエリを作成。(今回は、SQLが長いので、ヒアドキュメントで書いていく。)
+    // 下のSQLでは、'AS'で右辺にあるカラム名を別名として左辺にあるカラム名にしている。
+    // なぜ別名にする必要があるのか？それは、データベース内の他のテーブルに登録してあるカラム名と重複しないようにするため。
     $query = <<<SQL
         SELECT
             T.id AS tweet_id,
@@ -89,6 +91,18 @@ function findTweets(array $user)
             T.status = 'active'
     SQL;
 
+    // 検索キーワードが入力されていた場合
+    if (isset($keyword)) {
+        // エスケープ
+        $keyword = $mysqli->real_escape_string($keyword);
+        // ツイート主のニックネーム・ユーザー名・本文から部分一致検索
+        $query .= ' AND CONCAT(U.nickname, U.name, T.body) LIKE "%' . $keyword . '%"';
+    }
+
+    // 新しい順に並び変え
+    $query .= ' ORDER BY T.created_at DESC';
+    // 表示件数を50件までにする
+    $query .= ' LIMIT 50';
     // クエリ実行
     $result = $mysqli->query($query);
     if ($result) {
