@@ -7,6 +7,6 @@ date_default_timezone_set('Asia/Tokyo');
 define('HOME_URL', '/TwitterClone01/');
 //データベースの接続情報
 define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASSWORD', '');
-define('DB_NAME', 'twitter_clone');
+define('DB_USER', 'haru034');
+define('DB_PASSWORD', 'X6hWnVdf');
+define('DB_NAME', 'haru034_twitter_clone');
