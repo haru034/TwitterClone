@@ -51,7 +51,7 @@ function createTweet(array $data)
 function findTweets(array $user, string $keyword = null)
 {
     // DB接続
-    $mysqli = new mysqli(DB_HOST, DB_USER, '', DB_NAME);
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     // 接続エラーがある場合->処理停止
     if ($mysqli->connect_errno) {
         echo 'MySQLの接続に失敗しました。 :' . $mysqli->connect_error . "\n";

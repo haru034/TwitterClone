@@ -12,7 +12,7 @@
 function createLike(array $data) // 関数を作成(createLike)
 {
     // DB接続
-    $mysqli = new mysqli(DB_HOST, DB_USER, '', DB_NAME);
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     // エラーが起きたら強制停止する。
     if ($mysqli->connect_errno) {
         echo 'MySQLの接続に失敗しました。: ' . $mysqli->connect_error . "\n";

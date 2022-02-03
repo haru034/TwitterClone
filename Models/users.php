@@ -12,7 +12,7 @@
 function createUser(array $data)
 {
     // DB接続
-    $mysqli = new mysqli(DB_HOST, DB_USER, '', DB_NAME);
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
     // 接続エラーがある場合->処理停止
     if ($mysqli->connect_errno) {
@@ -57,7 +57,7 @@ function createUser(array $data)
 function findUserAndCheckPassword(string $email, string $password)
 {
     // DB接続
-    $mysqli = new mysqli(DB_HOST, DB_USER, '', DB_NAME);
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
     // 接続エラーがある場合->処理停止
     if ($mysqli->connect_errno) {
